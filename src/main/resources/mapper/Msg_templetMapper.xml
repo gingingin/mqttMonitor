@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzwy.domain.repository.Msg_templetMapper">
+  <resultMap id="baseResultMap" type="com.yzwy.domain.model.Msg_templet">
+    <id column="id" property="id" jdbcType="BIGINT"  />
+    <result column="function_code" property="function_code" jdbcType="VARCHAR"/>
+    <result column="terminal_type" property="terminal_type" jdbcType="VARCHAR"/>
+    <result column="deviece_type" property="deviece_type" jdbcType="VARCHAR"/>
+    <result column="control_code" property="control_code" jdbcType="VARCHAR"/>
+    <result column="templet" property="templet" jdbcType="VARCHAR"/>
+    <result column="templet_length" property="templet_length" jdbcType="VARCHAR"/>
+    <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    <result column="qos" property="qos" jdbcType="BIGINT"/>
+    <result column="templet_isvar" property="templet_isvar" jdbcType="VARCHAR"/>
+    <result column="templet_var" property="templet_var" jdbcType="VARCHAR"/>
+    <result column="packing_serial" property="packing_serial" jdbcType="VARCHAR"/>
+    <result column="length" property="length" jdbcType="BIGINT"/>
+  </resultMap>
+
+
+
+  <sql id="baseColumnList" >
+    id,function_code,terminal_type,deviece_type,control_code,templet,templet_length,remark,qos,templet_isvar,templet_var,packing_serial,length
+  </sql>
+
+  <select id="queryMsgTemplet" resultMap="baseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="baseColumnList" />
+    from msg_templet
+    <where>
+         id = #{id}
+    </where>
+  </select>
+
+    <select id="queryAllMsgTemplet" resultMap="baseResultMap" >
+        select
+        <include refid="baseColumnList" />
+        from msg_templet
+    </select>
+
+
+
+  <!--<insert id="add" parameterType="com.yzwy.domain.Demo" >-->
+    <!--INSERT INTO demo (text1, text2,url) VALUES (#{text1}, #{text2}, #{url})-->
+  <!--</insert>-->
+
+  <update id="updateTempletByCalcu" parameterType="com.yzwy.domain.model.Msg_templet" >
+    UPDATE msg_templet
+    <set>
+      templet_length = #{templet_length},templet_isvar = #{templet_isvar},templet_var =
+      #{templet_var},length = #{length}
+    </set>
+      WHERE id = #{id}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    DELETE FROM demo WHERE id in
+    <foreach item="idItem" collection="array" open="(" separator="," close=")">
+      #{idItem}
+    </foreach>
+  </delete>
+
+
+
+</mapper>

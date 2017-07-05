@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>mqtt连接测试工具</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <!--<link rel="stylesheet" th:href="@{/css/jQuery.ui.all.css}" />-->
+    <!--<link rel="stylesheet" th:href="@{/css/jquery.ui.customer.css}" />-->
+
+    <script th:src="@{/js/jquery/jquery-2.0.2.min.js}"></script>
+    <script th:src="@{/js/jquery/jquery-2.0.2.min.js}"></script>
+    <script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+
+    <style>
+        #subUl {
+            padding: 10px 0;
+            max-width: 300px;
+            max-height: 100px;
+            overflow-y: scroll;
+            border: 1px solid #ddd;
+            float: right;
+            width: 300px;
+            margin-right: 5px;
+        }
+
+        .subLi {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            float: left;
+            /*width: 120px;*/
+            font-size: 14px;
+            text-align: center;
+        }
+
+        h5 {
+            text-align: center;
+        }
+
+        table {
+            font-size: 14px;
+        }
+
+        table td {
+            padding: 10px 5px;
+        }
+
+        table input {
+            outline: none;
+            border: none;
+            border: 1px solid #888;
+            width: 300px;
+            height: 30px;
+            font-size: 14px;
+        }
+
+        .msgBox {
+            height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: 1px solid #ddd;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .msgBox .message {
+            width: 100%;
+            padding: 10px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+            width: 100px;
+            font-family: "微软雅黑";
+            font-weight: 500;
+            text-align: right;
+            margin-right: 10px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<table>
+    <tr>
+        <td style="padding-left: 50px">
+            <h5>mqtt连接测试工具-基于websocket实现</h5>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/templet/download">下载报文模版json</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>websocketurl:</label><input id="websocketurl" type="text"
+                                               readonly="readonly"
+                                               placeholder="websocketurl 例如：ws://localhost:8080/cicservice/websocket"
+                                               th:value="${#httpServletRequest.getRequestURL().toString().replace('monitor','websocket').replace('http','ws')}"/>
+        </td>
+        <td>
+            <button class="btn btn-info btn-xs" onclick="buildWebSocket()">连接websocket</button>
+            <button class="btn btn-danger btn-xs" onclick="closeWebSocket()">关闭WebSocket连接</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>mqtt host地址:</label><input id="host" type="text"
+                                               />
+        </td>
+        <td>
+            <!--<%&#45;&#45;<button class="btn btn-info btn-xs" id="mqttConnect">连接mqtt</button>&#45;&#45;%>-->
+        </td>
+    </tr>
+    <tr>
+
+    </tr>
+    <tr>
+
+        <td>
+            <label>添加主题:</label><input id="subTopic" type="text"
+                                       onkeydown="return banInputSapce(event);"
+                                       placeholder="subTopic 订阅发布主题填同一个可检测后台与中间件的连接是否通畅"
+                                       value="/jxhome/#"/>
+        </td>
+        <td>
+            <button class="btn btn-success btn-xs" id="add" onclick="addSub()">添加主题</button>
+
+            <!--<%&#45;&#45;<button class="btn btn-warning btn-xs" >获取内容</button>&#45;&#45;%>-->
+        </td>
+    </tr>
+    <tr>
+        <td id="acceptSub" style="padding:0">
+            <ul id="subUl"></ul>
+        </td>
+        <td>
+            <button class="btn btn-danger btn-xs" id="mqttSub">订阅主题</button>
+        </td>
+    </tr>
+    <tr>
+        <td><label>Qos:</label><input id="Qos" type="text" placeholder="Qos 0/1/2" value="0"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label>发布主题:</label><input id="pubTopic" type="text" placeholder="pubTopic" value="testTopic"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label>发送的字节:</label><input id="messagePub" type="text" placeholder="要发送的测试消息 需要是HexByte"/>
+        </td>
+        <td>
+            <button id="mqttPub" class="btn btn-xs btn-info">发送消息</button>
+            <button onclick="clearDiv()" class="btn btn-xs btn-danger">清空</button>
+        </td>
+    </tr>
+
+</table>
+
+<div class="msgBox">
+    <div  class="message" id="message1"></div>
+</div>
+
+
+<script th:src="@{/js/MqttMonitor.js}"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzwy.domain.repository.PropertiesMapper">
+  <resultMap id="baseResultMap" type="com.yzwy.domain.model.Properties">
+    <id column="id" property="id" jdbcType="BIGINT"  />
+    <result column="code" property="code" jdbcType="VARCHAR"/>
+    <result column="type" property="type" jdbcType="VARCHAR"/>
+    <result column="length" property="length" jdbcType="BIGINT"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="formate" property="formate" jdbcType="VARCHAR"/>
+    <result column="is_var" property="is_var" jdbcType="BIGINT"/>
+    <result column="default_field" property="default_field" jdbcType="VARCHAR"/>
+    <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    <result column="is_conversion" property="is_conversion" jdbcType="BIGINT"/>
+
+  </resultMap>
+
+  <sql id="baseColumnList" >
+    id,code,type,length,name,formate,is_var,default_field,remark,is_conversion
+  </sql>
+
+  <select id="queryProperty" resultMap="baseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="baseColumnList" />
+    from properties
+    <where>
+         code = #{code}
+    </where>
+  </select>
+
+  <select id="queryDemoById"  resultMap="baseResultMap" parameterType="java.lang.Long">
+    SELECT
+    <include refid="baseColumnList" />
+    FROM demo
+    WHERE id = #{id}
+  </select>
+
+  <!--<insert id="add" parameterType="com.yzwy.domain.Demo" >-->
+    <!--INSERT INTO demo (text1, text2,url) VALUES (#{text1}, #{text2}, #{url})-->
+  <!--</insert>-->
+
+  <!--<update id="update" parameterType="com.yzwy.domain.Demo" >-->
+    <!--UPDATE demo SET text1 = #{text1},text2 = #{text2},url = #{url} WHERE id = #{id}-->
+  <!--</update>-->
+
+  <delete id="deleteByIds" parameterType="java.lang.String" >
+    DELETE FROM demo WHERE id in
+    <foreach item="idItem" collection="array" open="(" separator="," close=")">
+      #{idItem}
+    </foreach>
+  </delete>
+
+
+
+</mapper>

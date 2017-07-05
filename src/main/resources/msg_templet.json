@@ -1,0 +1,8 @@
+
+{
+	"001104":
+{
+		"control_code":"00","function_code":"11","id":28,"length":34,"packing_serial":"00","remark":"智电插 发送 读终端参数","templet":"headCode,lengthAll,controlCode,functionCode,destAddress,sourceAddress,sessionId,userPhone,errorCode,operateSecret,channelId,crc","templet_isvar":"0,2,1,1,1,1,1,1,1,1,1,2","templet_length":"1,2,1,1,5,5,6,6,1,4,1,1","templet_var":"AA,00 22,controlCode,functionCode,destAddress,sourceAddress,sessionId,userPhone,errorCode,operateSecret,channelId,crc","terminal_type":"04"
+	}
+
+}
